@@ -18,8 +18,8 @@ MAINTAINER Sonatype <cloud-ops@sonatype.com>
 # Atomic Labels
 LABEL name="Nexus Repository Manager" \
       vendor="Sonatype" \
-      version="3.7.1-02" \
-      release="3.7.1" \
+      version="3.21.1-01" \
+      release="3.21.1" \
       url="https://sonatype.com" \
       summary="The Nexus Repository Manager server \
           with universal support for popular component formats." \
@@ -64,7 +64,7 @@ RUN yum install -y --setopt=tsflags=nodocs curl tar && \
 ENV SONATYPE_DIR=/opt/sonatype
 ENV NEXUS_DATA=/nexus-data \
     NEXUS_HOME=${SONATYPE_DIR}/nexus \
-    NEXUS_VERSION=3.7.1-02 \
+    NEXUS_VERSION=3.21.1-01 \
     SONATYPE_WORK=${SONATYPE_DIR}/sonatype-work \
     NEXUS_CONTEXT='' \
     USER_NAME=nexus \
@@ -72,13 +72,11 @@ ENV NEXUS_DATA=/nexus-data \
 
 # Install Nexus and Configure Nexus Runtime Environment
 RUN mkdir -p ${NEXUS_HOME} && \
-    mkdir -p ${NEXUS_HOME}/public && \
     curl --fail --silent --location --retry 3 \
       https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz \
       | gunzip \
       | tar x -C ${NEXUS_HOME} --strip-components=1 nexus-${NEXUS_VERSION} && \
     chown -R root:root ${NEXUS_HOME} && \
-    chmod -R 777 ${NEXUS_HOME}/public && \
     \
     sed \
       -e '/^nexus-context/ s:$:${NEXUS_CONTEXT}:' \
@@ -97,6 +95,10 @@ VOLUME ${NEXUS_DATA}
 
 # arbitrary uid recognition at runtime - for OpenShift deployments
 RUN sed "s@${USER_NAME}:x:${USER_UID}:@${USER_NAME}:x:\${USER_ID}:@g" /etc/passwd > /etc/passwd.template
+
+RUN chown -R ${NEXUS_USER}:${NEXUS_USER} ${NEXUS_HOME} ${NEXUS_DATA} ${SONATYPE_WORK}
+RUN chown -R nexus:nexus /nexus-data
+RUN chmod u+wxr -R /nexus-data
 
 # Supply non variable to USER command ${USER_NAME}
 USER 200
