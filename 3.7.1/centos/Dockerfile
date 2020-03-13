@@ -97,7 +97,6 @@ VOLUME ${NEXUS_DATA}
 RUN sed "s@${USER_NAME}:x:${USER_UID}:@${USER_NAME}:x:\${USER_ID}:@g" /etc/passwd > /etc/passwd.template
 
 RUN chown -R ${NEXUS_USER}:${NEXUS_USER} ${NEXUS_HOME} ${NEXUS_DATA} ${SONATYPE_WORK}
-RUN chown -R nexus:nexus /nexus-data
 RUN chmod u+wxr -R /nexus-data
 
 # Supply non variable to USER command ${USER_NAME}
