@@ -72,11 +72,13 @@ ENV NEXUS_DATA=/nexus-data \
 
 # Install Nexus and Configure Nexus Runtime Environment
 RUN mkdir -p ${NEXUS_HOME} && \
+    mkdir -p ${NEXUS_HOME}/public && \
     curl --fail --silent --location --retry 3 \
       https://download.sonatype.com/nexus/3/nexus-${NEXUS_VERSION}-unix.tar.gz \
       | gunzip \
       | tar x -C ${NEXUS_HOME} --strip-components=1 nexus-${NEXUS_VERSION} && \
     chown -R root:root ${NEXUS_HOME} && \
+    chmod -R 777 ${NEXUS_HOME}/public && \
     \
     sed \
       -e '/^nexus-context/ s:$:${NEXUS_CONTEXT}:' \
