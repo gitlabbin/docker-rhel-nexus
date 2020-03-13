@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM       docker.io/centos:7
+FROM       centos:centos7
 MAINTAINER Sonatype <cloud-ops@sonatype.com>
 
 # Atomic Labels
