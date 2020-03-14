@@ -111,8 +111,6 @@ ENV INSTALL4J_ADD_VM_PARAMS="-Xms1200m -Xmx1200m -XX:MaxDirectMemorySize=2g -Dja
 
 EXPOSE 8081
 
-#ENTRYPOINT [ "/uid_entrypoint" ]
-#CMD ["bin/nexus", "run"]
-
-CMD ["sh", "-c", "${SONATYPE_DIR}/start-nexus-repository-manager.sh"]
+ENTRYPOINT [ "/uid_entrypoint" ]
+CMD ["bin/nexus", "run"]
 
