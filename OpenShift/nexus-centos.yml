@@ -27,9 +27,9 @@
         source: 
           type: "Git"
           git: 
-            uri: "https://github.com/sonatype/docker-rhel-nexus.git"
+            uri: "https://github.com/gitlabbin/docker-rhel-nexus.git"
             ref: "master"
-          contextDir: "current/centos"
+          contextDir: "3.7.1/centos"
         strategy: 
           type: "Docker"
           dockerStrategy: 
