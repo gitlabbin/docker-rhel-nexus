@@ -15,7 +15,7 @@
 FROM  docker.io/centos:centos7
 MAINTAINER Sonatype <cloud-ops@sonatype.com>
 
-ARG NEXUS_VERSION=3.21.1-01
+ARG NEXUS_VERSION=3.22.0-02
 
 # Atomic Labels
 LABEL name="Nexus Repository Manager" \
